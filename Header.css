@@ -73,7 +73,7 @@ nav a::before {
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     opacity: 0;
-    transition: opacity 2s ease;
+    transition: opacity 1.3s ease;
     pointer-events: none;
 }
 
