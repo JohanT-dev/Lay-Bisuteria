@@ -146,36 +146,6 @@ section {
 
 
 
-/* Testimonials */
-.testimonials {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
-
-.testimonial {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    border-left: 4px solid #d4af6a;
-}
-
-.testimonial-text {
-    font-style: italic;
-    margin-bottom: 15px;
-    color: #6a6a6a;
-}
-
-.testimonial-author {
-    color: #c4916f;
-    font-weight: bold;
-}
-
-
-
-
 /* Animations */
 @keyframes fadeIn {
     from {
