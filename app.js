@@ -9,10 +9,12 @@ const firebaseConfig = {
     appId: "1:1088410162010:web:cb5545f742bcb501bc1963"
 };
 
+// ImgBB API Key
+const IMGBB_API_KEY = "ca0d0fd2b4335a17b960b903b57a43d9";
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-const storage = firebase.storage();
 
 // DOM Elements
 const form = document.getElementById('productForm');
@@ -59,7 +61,7 @@ document.getElementById('color').addEventListener('input', (e) => {
 
 document.getElementById('options').addEventListener('input', (e) => {
     const options = e.target.value.split(',').map(o => o.trim()).filter(o => o);
-    previewSelect.innerHTML = '<option>Please select</option>' +
+    previewSelect.innerHTML = '<option>Please select</option>' + 
         options.map(opt => `<option>${opt}</option>`).join('');
 });
 
@@ -67,7 +69,7 @@ document.getElementById('options').addEventListener('input', (e) => {
 function updateDiscount() {
     const price = parseFloat(document.getElementById('price').value) || 0;
     const originalPrice = parseFloat(document.getElementById('originalPrice').value) || 0;
-
+    
     if (originalPrice > price && price > 0) {
         const discount = Math.round(((originalPrice - price) / originalPrice) * 100);
         previewDiscount.textContent = `(-${discount}%)`;
@@ -78,13 +80,13 @@ function updateDiscount() {
 }
 
 // File Input Handler
-fileInput.addEventListener('change', function (e) {
+fileInput.addEventListener('change', function(e) {
     if (e.target.files.length > 0) {
         const file = e.target.files[0];
         fileName.textContent = '📎 ' + file.name;
-
+        
         const reader = new FileReader();
-        reader.onload = function (event) {
+        reader.onload = function(event) {
             previewImage.src = event.target.result;
             previewImage.style.display = 'block';
             placeholder.style.display = 'none';
@@ -117,18 +119,45 @@ function showAlert(message, type) {
     }, 5000);
 }
 
-// Upload Image to Firebase Storage
-async function uploadImage(file) {
-    const timestamp = Date.now();
-    const fileName = `products/${timestamp}_${file.name}`;
-    const storageRef = storage.ref(fileName);
-
+// Upload Image to ImgBB
+async function uploadImageToImgBB(file) {
     try {
-        const snapshot = await storageRef.put(file);
-        const downloadURL = await snapshot.ref.getDownloadURL();
-        return downloadURL;
+        // Convert file to base64
+        const base64 = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                // Remove data URL prefix (e.g., "data:image/png;base64,")
+                const base64String = reader.result.split(',')[1];
+                resolve(base64String);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+
+        // Create form data
+        const formData = new FormData();
+        formData.append('image', base64);
+        formData.append('key', IMGBB_API_KEY);
+
+        // Upload to ImgBB
+        const response = await fetch('https://api.imgbb.com/1/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to upload image to ImgBB');
+        }
+
+        const data = await response.json();
+        
+        if (data.success) {
+            return data.data.url; // Returns the direct image URL
+        } else {
+            throw new Error('ImgBB upload failed');
+        }
     } catch (error) {
-        console.error('Error uploading image:', error);
+        console.error('Error uploading to ImgBB:', error);
         throw new Error('Failed to upload image');
     }
 }
@@ -148,11 +177,11 @@ async function addProductToFirestore(productData) {
 }
 
 // Form Submit Handler
-form.addEventListener('submit', async function (e) {
+form.addEventListener('submit', async function(e) {
     e.preventDefault();
-
+    
     showLoading();
-
+    
     try {
         // Get form data
         const imageFile = fileInput.files[0];
@@ -160,13 +189,18 @@ form.addEventListener('submit', async function (e) {
             throw new Error('Please select an image');
         }
 
-        // Upload image first
-        const imageUrl = await uploadImage(imageFile);
+        // Validate image size (max 5MB for ImgBB)
+        if (imageFile.size > 5 * 1024 * 1024) {
+            throw new Error('Image size must be less than 5MB');
+        }
 
+        // Upload image to ImgBB
+        const imageUrl = await uploadImageToImgBB(imageFile);
+        
         // Prepare product data
         const options = document.getElementById('options').value
             .split(',').map(o => o.trim()).filter(o => o);
-
+        
         const productData = {
             name: document.getElementById('productName').value,
             price: parseFloat(document.getElementById('price').value),
@@ -178,13 +212,13 @@ form.addEventListener('submit', async function (e) {
 
         // Add to Firestore
         const productId = await addProductToFirestore(productData);
-
+        
         // Add product card to display
         addProductCard({ ...productData, id: productId });
-
+        
         // Show success message
         showAlert('Product uploaded successfully!', 'success');
-
+        
         // Reset form
         form.reset();
         previewImage.style.display = 'none';
@@ -196,7 +230,7 @@ form.addEventListener('submit', async function (e) {
         previewDiscount.style.display = 'none';
         previewColor.textContent = 'Color';
         previewSelect.innerHTML = '<option>Please select</option>';
-
+        
     } catch (error) {
         console.error('Error:', error);
         showAlert(error.message || 'Failed to upload product', 'error');
@@ -210,7 +244,7 @@ function addProductCard(product) {
     const card = document.createElement('div');
     card.className = 'product-card';
     card.dataset.productId = product.id;
-
+    
     let pricingHTML = '';
     if (product.originalPrice && product.originalPrice > product.price) {
         const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
@@ -222,11 +256,11 @@ function addProductCard(product) {
     } else {
         pricingHTML = `<span class="product-price">£${product.price.toFixed(2)}</span>`;
     }
-
-    const optionsHTML = product.options && product.options.length > 0
+    
+    const optionsHTML = product.options && product.options.length > 0 
         ? product.options.map(opt => `<option>${opt}</option>`).join('')
         : '';
-
+    
     card.innerHTML = `
         <div class="product-image">
             <img src="${product.imageUrl}" alt="${product.name}">
@@ -243,7 +277,7 @@ function addProductCard(product) {
             <button class="add-to-bag-btn">ADD TO BAG</button>
         </div>
     `;
-
+    
     productGrid.appendChild(card);
 }
 
@@ -254,7 +288,7 @@ async function loadProducts() {
             .orderBy('createdAt', 'desc')
             .limit(20)
             .get();
-
+        
         snapshot.forEach(doc => {
             const product = { id: doc.id, ...doc.data() };
             addProductCard(product);
