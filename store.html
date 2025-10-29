@@ -13,7 +13,6 @@
 <body>
     <header>
         <div class="logo">Lay Bisuteria</div>
-        </div>
     </header>
 
     <nav>
@@ -22,245 +21,64 @@
         <a href="#">Tienda</a>
         <a href="contact.html">Contacto</a>
     </nav>
-        <div class="container">
-            <div class="filters">
-                <div class="filter-group">
-                    <span class="filter-label">Category</span>
-                    <select id="categoryFilter">
-                        <option value="all">All Jewelry</option>
-                        <option value="earrings">Earrings</option>
-                        <option value="necklace">Necklaces</option>
-                        <option value="bracelet">Bracelets</option>
-                        <option value="brooch">Brooches</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <span class="filter-label">Material</span>
-                    <select id="materialFilter">
-                        <option value="all">All Materials</option>
-                        <option value="gold">Gold</option>
-                        <option value="silver">Silver</option>
-                        <option value="pearl">Pearl</option>
-                        <option value="crystal">Crystal</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <span class="filter-label">Price</span>
-                    <select id="priceFilter">
-                        <option value="all">All Prices</option>
-                        <option value="0-20">£0 - £20</option>
-                        <option value="20-40">£20 - £40</option>
-                        <option value="40-60">£40 - £60</option>
-                        <option value="60+">£60+</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <span class="filter-label">Sort</span>
-                    <select id="sortFilter">
-                        <option value="newest">Newest</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                        <option value="popular">Most Popular</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="products-grid" id="productsGrid"></div>
+    <div class="container">
+        <div class="filters">
+            <div class="filter-group">
+                <span class="filter-label">Category</span>
+                <select id="categoryFilter">
+                    <option value="all">All Jewelry</option>
+                    <option value="earrings">Earrings</option>
+                    <option value="necklace">Necklaces</option>
+                    <option value="bracelet">Bracelets</option>
+                    <option value="brooch">Brooches</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Material</span>
+                <select id="materialFilter">
+                    <option value="all">All Materials</option>
+                    <option value="gold">Gold</option>
+                    <option value="silver">Silver</option>
+                    <option value="pearl">Pearl</option>
+                    <option value="crystal">Crystal</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Price</span>
+                <select id="priceFilter">
+                    <option value="all">All Prices</option>
+                    <option value="0-20">£0 - £20</option>
+                    <option value="20-40">£20 - £40</option>
+                    <option value="40-60">£40 - £60</option>
+                    <option value="60+">£60+</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Sort</span>
+                <select id="sortFilter">
+                    <option value="newest">Newest</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="popular">Most Popular</option>
+                </select>
+            </div>
         </div>
 
-        <script>
-            const products = [
-                {
-                    id: 1,
-                    name: 'Floral Brooch',
-                    type: 'brooch',
-                    price: 30.00,
-                    oldPrice: null,
-                    discount: null,
-                    color: 'Turquoise',
-                    material: 'crystal',
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%23FFE082" width="400" height="400"/%3E%3Cg%3E%3Ccircle cx="200" cy="200" r="80" fill="%2326C6DA" opacity="0.7"/%3E%3Ccircle cx="160" cy="160" r="30" fill="%2326C6DA" opacity="0.9"/%3E%3Ccircle cx="240" cy="160" r="30" fill="%2326C6DA" opacity="0.9"/%3E%3Ccircle cx="200" cy="120" r="30" fill="%2326C6DA" opacity="0.9"/%3E%3Ccircle cx="160" cy="240" r="30" fill="%2326C6DA" opacity="0.9"/%3E%3Ccircle cx="240" cy="240" r="30" fill="%2326C6DA" opacity="0.9"/%3E%3Ccircle cx="200" cy="200" r="15" fill="%23FFD700"/%3E%3C/g%3E%3C/svg%3E',
-                    sizes: ['Standard']
-                },
-                {
-                    id: 2,
-                    name: 'Crystal Hoop Earrings',
-                    type: 'earrings',
-                    price: 48.00,
-                    oldPrice: 60.00,
-                    discount: '-20%',
-                    color: 'Pink',
-                    material: 'crystal',
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%23FCE4EC" width="400" height="400"/%3E%3Cg%3E%3Cellipse cx="150" cy="200" rx="50" ry="70" fill="none" stroke="%23D4AF37" stroke-width="5"/%3E%3Cellipse cx="250" cy="200" rx="50" ry="70" fill="none" stroke="%23D4AF37" stroke-width="5"/%3E%3Ccircle cx="130" cy="180" r="8" fill="%23E91E63"/%3E%3Ccircle cx="140" cy="200" r="8" fill="%23E91E63"/%3E%3Ccircle cx="130" cy="220" r="8" fill="%23E91E63"/%3E%3Ccircle cx="230" cy="180" r="8" fill="%23E91E63"/%3E%3Ccircle cx="240" cy="200" r="8" fill="%23E91E63"/%3E%3Ccircle cx="230" cy="220" r="8" fill="%23E91E63"/%3E%3C/g%3E%3C/svg%3E',
-                    sizes: ['One Size']
-                },
-                {
-                    id: 3,
-                    name: 'Pearl & Ribbon Bracelet',
-                    type: 'bracelet',
-                    price: 12.00,
-                    oldPrice: null,
-                    discount: null,
-                    color: 'Red',
-                    material: 'pearl',
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%23FFF9C4" width="400" height="400"/%3E%3Cg%3E%3Cellipse cx="200" cy="200" rx="140" ry="40" fill="none" stroke="%23C62828" stroke-width="8"/%3E%3Ccircle cx="140" cy="200" r="12" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Ccircle cx="170" cy="195" r="12" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Ccircle cx="200" cy="192" r="12" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Ccircle cx="230" cy="195" r="12" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Ccircle cx="260" cy="200" r="12" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Cpolygon points="180,150 200,130 220,150" fill="%23C62828"/%3E%3C/g%3E%3C/svg%3E',
-                    sizes: ['S', 'M', 'L']
-                },
-                {
-                    id: 4,
-                    name: 'Fruit Charm Jewelry Set',
-                    type: 'earrings',
-                    price: 7.00,
-                    oldPrice: null,
-                    discount: null,
-                    color: 'Gold',
-                    material: 'gold',
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%23FFF9C4" width="400" height="400"/%3E%3Cg%3E%3Cellipse cx="200" cy="220" rx="80" ry="40" fill="none" stroke="%23D4AF37" stroke-width="5"/%3E%3Ccircle cx="160" cy="220" r="10" fill="%23D4AF37"/%3E%3Ccircle cx="180" cy="215" r="10" fill="%23D4AF37"/%3E%3Ccircle cx="200" cy="212" r="10" fill="%23D4AF37"/%3E%3Ccircle cx="220" cy="215" r="10" fill="%23D4AF37"/%3E%3Ccircle cx="240" cy="220" r="10" fill="%23D4AF37"/%3E%3Cellipse cx="180" cy="180" rx="18" ry="25" fill="%23E53935"/%3E%3Cellipse cx="220" cy="180" rx="18" ry="25" fill="%23E53935"/%3E%3Ccircle cx="200" cy="160" r="15" fill="%23FFD700" stroke="%23D4AF37" stroke-width="2"/%3E%3C/g%3E%3C/svg%3E',
-                    sizes: ['One Size']
-                },
-                {
-                    id: 5,
-                    name: 'Elegant Pearl Necklace',
-                    type: 'necklace',
-                    price: 45.00,
-                    oldPrice: null,
-                    discount: null,
-                    color: 'White',
-                    material: 'pearl',
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%23F5F5F5" width="400" height="400"/%3E%3Cg%3E%3Cpath d="M100,180 Q200,280 300,180" fill="none" stroke="%23D4AF37" stroke-width="4"/%3E%3Ccircle cx="120" cy="195" r="14" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Ccircle cx="150" cy="220" r="14" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Ccircle cx="180" cy="238" r="14" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Ccircle cx="200" cy="245" r="16" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Ccircle cx="220" cy="238" r="14" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Ccircle cx="250" cy="220" r="14" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3Ccircle cx="280" cy="195" r="14" fill="%23FFFFFF" stroke="%23DDD" stroke-width="2"/%3E%3C/g%3E%3C/svg%3E',
-                    sizes: ['40cm', '45cm', '50cm']
-                },
-                {
-                    id: 6,
-                    name: 'Statement Gold Bracelet',
-                    type: 'bracelet',
-                    price: 35.00,
-                    oldPrice: null,
-                    discount: null,
-                    color: 'Gold',
-                    material: 'gold',
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%23FFFDE7" width="400" height="400"/%3E%3Cg%3E%3Cellipse cx="200" cy="200" rx="120" ry="50" fill="none" stroke="%23D4AF37" stroke-width="12"/%3E%3Ccircle cx="200" cy="200" r="60" fill="none" stroke="%23FFD700" stroke-width="8"/%3E%3Ccircle cx="160" cy="200" r="12" fill="%23D4AF37"/%3E%3Ccircle cx="180" cy="195" r="12" fill="%23D4AF37"/%3E%3Ccircle cx="200" cy="192" r="12" fill="%23D4AF37"/%3E%3Ccircle cx="220" cy="195" r="12" fill="%23D4AF37"/%3E%3Ccircle cx="240" cy="200" r="12" fill="%23D4AF37"/%3E%3C/g%3E%3C/svg%3E',
-                    sizes: ['S', 'M', 'L']
-                },
-                {
-                    id: 7,
-                    name: 'Crystal Drop Earrings',
-                    type: 'earrings',
-                    price: 28.00,
-                    oldPrice: 35.00,
-                    discount: '-20%',
-                    color: 'Silver',
-                    material: 'crystal',
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%23E3F2FD" width="400" height="400"/%3E%3Cg%3E%3Ccircle cx="140" cy="150" r="8" fill="%23C0C0C0"/%3E%3Crect x="136" y="160" width="8" height="30" fill="%23C0C0C0"/%3E%3Cpolygon points="140,190 125,220 140,240 155,220" fill="%2342A5F5" opacity="0.8"/%3E%3Ccircle cx="260" cy="150" r="8" fill="%23C0C0C0"/%3E%3Crect x="256" y="160" width="8" height="30" fill="%23C0C0C0"/%3E%3Cpolygon points="260,190 245,220 260,240 275,220" fill="%2342A5F5" opacity="0.8"/%3E%3C/g%3E%3C/svg%3E',
-                    sizes: ['One Size']
-                },
-                {
-                    id: 8,
-                    name: 'Vintage Rose Necklace',
-                    type: 'necklace',
-                    price: 52.00,
-                    oldPrice: null,
-                    discount: null,
-                    color: 'Rose Gold',
-                    material: 'gold',
-                    image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect fill="%23FFF3E0" width="400" height="400"/%3E%3Cg%3E%3Cpath d="M100,160 Q200,240 300,160" fill="none" stroke="%23D4AF37" stroke-width="3"/%3E%3Ccircle cx="200" cy="230" r="40" fill="%23FF6B9D" opacity="0.3"/%3E%3Ccircle cx="180" cy="220" r="18" fill="%23FF6B9D" opacity="0.6"/%3E%3Ccircle cx="220" cy="220" r="18" fill="%23FF6B9D" opacity="0.6"/%3E%3Ccircle cx="200" cy="240" r="18" fill="%23FF6B9D" opacity="0.6"/%3E%3Ccircle cx="200" cy="210" r="18" fill="%23FF6B9D" opacity="0.8"/%3E%3Ccircle cx="200" cy="225" r="12" fill="%23FFD700"/%3E%3C/g%3E%3C/svg%3E',
-                    sizes: ['40cm', '45cm', '50cm']
-                }
-            ];
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be loaded from Firebase -->
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">
+                Loading products...
+            </div>
+        </div>
+    </div>
 
-            let filteredProducts = [...products];
-            let wishlist = {};
-
-            function renderProducts() {
-                const grid = document.getElementById('productsGrid');
-                grid.innerHTML = '';
-
-                filteredProducts.forEach(product => {
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-
-                    const priceHTML = product.oldPrice
-                        ? `<span class="old-price">£${product.oldPrice.toFixed(2)}</span>
-                       <span class="price">£${product.price.toFixed(2)}</span>
-                       <span class="discount">${product.discount}</span>`
-                        : `<span class="price">£${product.price.toFixed(2)}</span>`;
-
-                    card.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
-                    <div class="wishlist-btn ${wishlist[product.id] ? 'active' : ''}" onclick="toggleWishlist(${product.id})">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                        </svg>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-type">${product.type.charAt(0).toUpperCase() + product.type.slice(1)}</div>
-                        <div class="price-container">
-                            ${priceHTML}
-                        </div>
-                        <div class="color-label">${product.color}</div>
-                        <select class="size-select">
-                            <option>Please select size</option>
-                            ${product.sizes.map(size => `<option>${size}</option>`).join('')}
-                        </select>
-                        <button class="add-to-bag" onclick="addToBag(${product.id})">Add to Bag</button>
-                    </div>
-                `;
-
-                    grid.appendChild(card);
-                });
-            }
-
-            function toggleWishlist(productId) {
-                wishlist[productId] = !wishlist[productId];
-                renderProducts();
-            }
-
-            function addToBag(productId) {
-                const product = products.find(p => p.id === productId);
-                alert(`Added ${product.name} to your bag!`);
-            }
-
-            function applyFilters() {
-                const category = document.getElementById('categoryFilter').value;
-                const material = document.getElementById('materialFilter').value;
-                const price = document.getElementById('priceFilter').value;
-                const sort = document.getElementById('sortFilter').value;
-
-                filteredProducts = products.filter(product => {
-                    let matchCategory = category === 'all' || product.type === category;
-                    let matchMaterial = material === 'all' || product.material === material;
-                    let matchPrice = true;
-
-                    if (price !== 'all') {
-                        if (price === '0-20') matchPrice = product.price <= 20;
-                        else if (price === '20-40') matchPrice = product.price > 20 && product.price <= 40;
-                        else if (price === '40-60') matchPrice = product.price > 40 && product.price <= 60;
-                        else if (price === '60+') matchPrice = product.price > 60;
-                    }
-
-                    return matchCategory && matchMaterial && matchPrice;
-                });
-
-                // Apply sorting
-                if (sort === 'price-low') {
-                    filteredProducts.sort((a, b) => a.price - b.price);
-                } else if (sort === 'price-high') {
-                    filteredProducts.sort((a, b) => b.price - a.price);
-                } else if (sort === 'newest') {
-                    filteredProducts.sort((a, b) => b.id - a.id);
-                }
-
-                renderProducts();
-            }
-
-            document.getElementById('categoryFilter').addEventListener('change', applyFilters);
-            document.getElementById('materialFilter').addEventListener('change', applyFilters);
-            document.getElementById('priceFilter').addEventListener('change', applyFilters);
-            document.getElementById('sortFilter').addEventListener('change', applyFilters);
-
-            renderProducts();
-        </script>
-    </body>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <!-- Store JavaScript -->
+    <script src="store.js"></script>
+</body>
 
 </html>

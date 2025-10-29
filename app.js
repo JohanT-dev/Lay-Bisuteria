@@ -162,17 +162,17 @@ async function uploadImageToImgBB(file) {
     }
 }
 
-// Add Product to Firestore
-async function addProductToFirestore(productData) {
+// Add Item to Firestore
+async function addItemToFirestore(itemData) {
     try {
-        const docRef = await db.collection('products').add({
-            ...productData,
+        const docRef = await db.collection('items').add({
+            ...itemData,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
         return docRef.id;
     } catch (error) {
-        console.error('Error adding product:', error);
-        throw new Error('Failed to save product to database');
+        console.error('Error adding item:', error);
+        throw new Error('Failed to save item to database');
     }
 }
 
@@ -197,11 +197,11 @@ form.addEventListener('submit', async function(e) {
         // Upload image to ImgBB
         const imageUrl = await uploadImageToImgBB(imageFile);
         
-        // Prepare product data
+        // Prepare item data
         const options = document.getElementById('options').value
             .split(',').map(o => o.trim()).filter(o => o);
         
-        const productData = {
+        const itemData = {
             name: document.getElementById('productName').value,
             price: parseFloat(document.getElementById('price').value),
             originalPrice: parseFloat(document.getElementById('originalPrice').value) || null,
@@ -211,13 +211,13 @@ form.addEventListener('submit', async function(e) {
         };
 
         // Add to Firestore
-        const productId = await addProductToFirestore(productData);
+        const itemId = await addItemToFirestore(itemData);
         
         // Add product card to display
-        addProductCard({ ...productData, id: productId });
+        addProductCard({ ...itemData, id: itemId });
         
         // Show success message
-        showAlert('Product uploaded successfully!', 'success');
+        showAlert('Item uploaded successfully!', 'success');
         
         // Reset form
         form.reset();
@@ -233,7 +233,7 @@ form.addEventListener('submit', async function(e) {
         
     } catch (error) {
         console.error('Error:', error);
-        showAlert(error.message || 'Failed to upload product', 'error');
+        showAlert(error.message || 'Failed to upload item', 'error');
     } finally {
         hideLoading();
     }
@@ -281,22 +281,22 @@ function addProductCard(product) {
     productGrid.appendChild(card);
 }
 
-// Load Existing Products from Firebase
-async function loadProducts() {
+// Load Existing Items from Firebase
+async function loadItems() {
     try {
-        const snapshot = await db.collection('products')
+        const snapshot = await db.collection('items')
             .orderBy('createdAt', 'desc')
             .limit(20)
             .get();
         
         snapshot.forEach(doc => {
-            const product = { id: doc.id, ...doc.data() };
-            addProductCard(product);
+            const item = { id: doc.id, ...doc.data() };
+            addProductCard(item);
         });
     } catch (error) {
-        console.error('Error loading products:', error);
+        console.error('Error loading items:', error);
     }
 }
 
-// Load products when page loads
-window.addEventListener('DOMContentLoaded', loadProducts);
+// Load items when page loads
+window.addEventListener('DOMContentLoaded', loadItems);
