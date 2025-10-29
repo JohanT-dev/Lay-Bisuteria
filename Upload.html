@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Product</title>
+    <link rel="stylesheet" href="upload.css">
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Uploading product...</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Upload New Product</h1>
+            <p class="subtitle">Fill in the details and see a live preview of how your product will appear</p>
+        </div>
+
+        <div class="alert" id="alertBox"></div>
+
+        <div class="layout">
+            <div class="form-section">
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productName">Product Name *</label>
+                        <input type="text" id="productName" name="productName" required placeholder="Example Product">
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="price">Price (£) *</label>
+                            <input type="number" id="price" name="price" step="0.01" min="0" required placeholder="0.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="originalPrice">Original Price (£)</label>
+                            <input type="number" id="originalPrice" name="originalPrice" step="0.01" min="0" placeholder="0.00">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="color">Color *</label>
+                        <input type="text" id="color" name="color" required placeholder="e.g., Pink, White, Silver">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="options">Size/Variant Options (comma-separated)</label>
+                        <input type="text" id="options" name="options" placeholder="e.g., Small, Medium, Large">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Product Image *</label>
+                        <div class="file-upload">
+                            <input type="file" id="productImage" name="productImage" accept="image/*" required>
+                            <label for="productImage" class="file-upload-label">
+                                <span>📷 Click to upload image</span>
+                            </label>
+                        </div>
+                        <div class="file-name" id="fileName"></div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">Add Product to Firebase</button>
+                </form>
+            </div>
+
+            <div class="preview-section">
+                <h2 class="preview-title">Product Preview</h2>
+                <div class="product-grid" id="productGrid">
+                    <div class="product-card" id="previewCard">
+                        <div class="product-image">
+                            <span class="placeholder">📷</span>
+                            <img id="previewImage" style="display: none;">
+                            <button class="favorite-btn">♡</button>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title" id="previewTitle">Example Product</div>
+                            <div class="product-pricing">
+                                <span class="original-price" id="previewOriginalPrice" style="display: none;">£60.00</span>
+                                <span class="product-price" id="previewPrice">£0.00</span>
+                                <span class="discount" id="previewDiscount" style="display: none;">(-20%)</span>
+                            </div>
+                            <div class="product-color" id="previewColor">Color</div>
+                            <select class="product-select" id="previewSelect">
+                                <option>Please select</option>
+                            </select>
+                            <button class="add-to-bag-btn">ADD TO BAG</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    
+    <!-- External JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
