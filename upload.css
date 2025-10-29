@@ -21,9 +21,14 @@ body {
     border-radius: 12px;
     margin-bottom: 30px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-h1 {
+.header-content h1 {
     color: #333;
     margin-bottom: 10px;
     font-size: 28px;
@@ -32,6 +37,27 @@ h1 {
 .subtitle {
     color: #666;
     font-size: 14px;
+}
+
+.back-btn {
+    padding: 12px 24px;
+    background: white;
+    color: #00bfa5;
+    border: 2px solid #00bfa5;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-btn:hover {
+    background: #00bfa5;
+    color: white;
 }
 
 .layout {
@@ -380,5 +406,10 @@ textarea {
 
     .product-grid {
         grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }

@@ -37,17 +37,17 @@ const placeholder = document.querySelector('.placeholder');
 
 // Live Preview Updates
 document.getElementById('productName').addEventListener('input', (e) => {
-    previewTitle.textContent = e.target.value || 'Example Product';
+    previewTitle.textContent = e.target.value || 'Producto de Ejemplo';
 });
 
 document.getElementById('price').addEventListener('input', (e) => {
-    previewPrice.textContent = e.target.value ? `£${parseFloat(e.target.value).toFixed(2)}` : '£0.00';
+    previewPrice.textContent = e.target.value ? `${parseFloat(e.target.value).toFixed(2)}` : '$0.00';
     updateDiscount();
 });
 
 document.getElementById('originalPrice').addEventListener('input', (e) => {
     if (e.target.value) {
-        previewOriginalPrice.textContent = `£${parseFloat(e.target.value).toFixed(2)}`;
+        previewOriginalPrice.textContent = `${parseFloat(e.target.value).toFixed(2)}`;
         previewOriginalPrice.style.display = 'inline';
     } else {
         previewOriginalPrice.style.display = 'none';
@@ -61,7 +61,7 @@ document.getElementById('color').addEventListener('input', (e) => {
 
 document.getElementById('options').addEventListener('input', (e) => {
     const options = e.target.value.split(',').map(o => o.trim()).filter(o => o);
-    previewSelect.innerHTML = '<option>Please select</option>' + 
+    previewSelect.innerHTML = '<option>Por favor seleccione</option>' + 
         options.map(opt => `<option>${opt}</option>`).join('');
 });
 
@@ -203,6 +203,7 @@ form.addEventListener('submit', async function(e) {
         
         const itemData = {
             name: document.getElementById('productName').value,
+            type: document.getElementById('type').value,
             price: parseFloat(document.getElementById('price').value),
             originalPrice: parseFloat(document.getElementById('originalPrice').value) || null,
             color: document.getElementById('color').value,

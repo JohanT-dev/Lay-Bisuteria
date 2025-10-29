@@ -31,7 +31,7 @@ async function loadProductsFromFirebase() {
             products.push({
                 id: doc.id,
                 name: data.name,
-                type: 'jewelry', // Default type, you can add this to your upload form
+                type: data.type || 'jewelry', // Use type from Firebase or default to 'jewelry'
                 price: data.price,
                 oldPrice: data.originalPrice,
                 discount: data.originalPrice && data.originalPrice > data.price 
@@ -47,7 +47,7 @@ async function loadProductsFromFirebase() {
         filteredProducts = [...products];
         renderProducts();
     } catch (error) {
-        console.error('Error loading products from Firebase:', error);
+        console.error('Error al cargar productos desde Firebase:', error);
         // Fall back to empty array if there's an error
         products = [];
         filteredProducts = [];
