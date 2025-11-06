@@ -29,7 +29,7 @@ export async function handleLogin(e) {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         showSuccess('¡Inicio de sesión exitoso!');
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'profile.html';
         }, 1500);
     } catch (error) {
         showError(getErrorMessage(error.code));

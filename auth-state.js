@@ -38,7 +38,7 @@ function updateAuthButton(user) {
                         Mi Perfil
                     </a>
                     <a href="orders.html" class="dropdown-item">
-                        Mis Pedidos
+                        Mi Bolsa
                     </a>
                     <div class="dropdown-divider"></div>
                     <button onclick="handleLogout()" class="dropdown-item logout-btn">
