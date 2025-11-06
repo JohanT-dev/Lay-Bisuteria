@@ -20,7 +20,6 @@ header {
     position: relative;
 }
 
-
 .logo {
     padding-top: 20px;
     position: absolute;
@@ -32,6 +31,25 @@ header {
     color: #04080F;
 }
 
+/* Botón Login */
+.login-btn {
+    margin-left: auto;
+    padding: 10px 25px;
+    background: linear-gradient(to right, #E8A11D, #30D5C8, #BF211E);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-weight: 500;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
 
 /* Navigation */
 nav {
@@ -63,7 +81,6 @@ nav a::before {
     inset: 0;
     border-radius: 10px;
     padding: 2px;
-    /* grosor del borde */
     background: linear-gradient(to right, #E8A11D, #30D5C8, #BF211E);
     -webkit-mask:
         linear-gradient(#fff 0 0) content-box,
@@ -84,4 +101,21 @@ nav a:hover {
 
 nav a:hover::before {
     opacity: 1;
+}
+
+/* Contenido de ejemplo */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    color: #666;
 }
