@@ -35,7 +35,7 @@ header {
 .login-btn {
     margin-left: auto;
     padding: 10px 25px;
-    background: linear-gradient(to right, #E8A11D, #30D5C8, #BF211E);
+    background: black;
     color: white;
     text-decoration: none;
     border-radius: 25px;

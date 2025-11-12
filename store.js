@@ -83,11 +83,6 @@ function renderProducts() {
 
         card.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="product-image">
-            <div class="wishlist-btn ${wishlist[product.id] ? 'active' : ''}" onclick="toggleWishlist('${product.id}')">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-            </div>
             <div class="product-info">
                 <div class="product-name">${product.name}</div>
                 <div class="product-type">${product.type.charAt(0).toUpperCase() + product.type.slice(1)}</div>
@@ -99,7 +94,7 @@ function renderProducts() {
                     <option>Please select size</option>
                     ${product.sizes.map(size => `<option>${size}</option>`).join('')}
                 </select>
-                <button class="add-to-bag" onclick="addToBag('${product.id}')">Add to Bag</button>
+                <button class="add-to-bag" onclick="addToBag('${product.id}')">Ordenar</button>
             </div>
         `;
 
@@ -107,19 +102,12 @@ function renderProducts() {
     });
 }
 
-// Toggle wishlist
-function toggleWishlist(productId) {
-    wishlist[productId] = !wishlist[productId];
-    // Save to localStorage
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    renderProducts();
-}
 
 // Add to bag
 function addToBag(productId) {
     const product = products.find(p => p.id === productId);
     if (product) {
-        alert(`Added ${product.name} to your bag!`);
+        alert(`Placed and order for ${product.name} in ${product.color}`);
         // Here you can add logic to actually add to a shopping cart
     }
 }

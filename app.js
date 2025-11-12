@@ -265,7 +265,6 @@ function addProductCard(product) {
     card.innerHTML = `
         <div class="product-image">
             <img src="${product.imageUrl}" alt="${product.name}">
-            <button class="favorite-btn">♡</button>
         </div>
         <div class="product-info">
             <div class="product-title">${product.name}</div>
@@ -275,7 +274,6 @@ function addProductCard(product) {
                 <option>Please select</option>
                 ${optionsHTML}
             </select>
-            <button class="add-to-bag-btn">ADD TO BAG</button>
         </div>
     `;
     
@@ -287,7 +285,7 @@ async function loadItems() {
     try {
         const snapshot = await db.collection('items')
             .orderBy('createdAt', 'desc')
-            .limit(20)
+            .limit(1)
             .get();
         
         snapshot.forEach(doc => {

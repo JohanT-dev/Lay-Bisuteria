@@ -17,6 +17,7 @@
     width: 100%;
     height: auto;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    max-height: 500px;
 }
 
 .hero-content {
@@ -176,46 +177,12 @@
     object-fit: cover;
 }
 
-.wishlist-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: white;
-    border: none;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.wishlist-btn:hover {
-    background: #ff4757;
-}
-
-.wishlist-btn:hover svg {
-    fill: white;
-}
-
-.wishlist-btn svg {
-    width: 18px;
-    height: 18px;
-    fill: none;
-    stroke: #04080F;
-    stroke-width: 2;
-    transition: all 0.3s ease;
-}
-
 .product-info {
     padding: 20px;
 }
 
 .product-title {
-    font-size: 14px;
+    font-size: 20px;
     color: #333;
     margin-bottom: 15px;
     min-height: 40px;
