@@ -134,7 +134,7 @@ function renderProducts() {
                     <option>Por favor seleccione</option>
                     ${product.sizes.map(size => `<option>${size}</option>`).join('')}
                 </select>
-                <button class="add-to-bag" onclick="addToBag('${product.id}')">Agregar al Carrito</button>
+                <button class="add-to-bag" onclick="addToBag('${product.id}')">Personalizar</button>
             </div>
         `;
         
