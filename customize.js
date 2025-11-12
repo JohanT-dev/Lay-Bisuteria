@@ -12,9 +12,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-// Initialize EmailJS
-// IMPORTANT: Replace with your EmailJS credentials
-emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Get from https://www.emailjs.com/
 
 let productData = null;
 let currentUser = null;
