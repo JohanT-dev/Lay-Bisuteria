@@ -14,97 +14,162 @@ const firebaseConfig = {
     appId: "1:1088410162010:web:cb5545f742bcb501bc1963"
 };
 
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-// Función para manejar el inicio de sesión
-export async function handleLogin(e) {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+// Get redirect URL from query parameters
+function getRedirectUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('redirect') || 'index.html';
+}
 
+// Check if user is already logged in
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        // User is already logged in, redirect to intended page
+        const redirectUrl = getRedirectUrl();
+        window.location.href = redirectUrl;
+    }
+});
+
+// Handle login
+async function handleLogin(email, password) {
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        showSuccess('¡Inicio de sesión exitoso!');
-        setTimeout(() => {
-            window.location.href = 'profile.html';
-        }, 1500);
+        showLoading();
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        
+        // Get redirect URL
+        const redirectUrl = getRedirectUrl();
+        
+        // Redirect to intended page or home
+        window.location.href = redirectUrl;
+        
     } catch (error) {
-        showError(getErrorMessage(error.code));
+        hideLoading();
+        console.error('Error en login:', error);
+        
+        let errorMessage = 'Error al iniciar sesión';
+        switch (error.code) {
+            case 'auth/user-not-found':
+                errorMessage = 'Usuario no encontrado';
+                break;
+            case 'auth/wrong-password':
+                errorMessage = 'Contraseña incorrecta';
+                break;
+            case 'auth/invalid-email':
+                errorMessage = 'Email inválido';
+                break;
+            case 'auth/too-many-requests':
+                errorMessage = 'Demasiados intentos. Intenta más tarde';
+                break;
+        }
+        
+        showAlert(errorMessage, 'error');
     }
 }
 
-// Función para manejar el registro
-export async function handleRegister(e) {
-    e.preventDefault();
-    const name = document.getElementById('register-name').value;
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-
+// Handle signup
+async function handleSignup(email, password, displayName) {
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(userCredential.user, { displayName: name });
-        showSuccess('¡Cuenta creada exitosamente!');
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1500);
+        showLoading();
+        
+        // Create user
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        
+        // Update profile with display name
+        await user.updateProfile({
+            displayName: displayName
+        });
+        
+        // Create user document in Firestore
+        await db.collection('users').doc(user.uid).set({
+            displayName: displayName,
+            email: email,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        // Get redirect URL
+        const redirectUrl = getRedirectUrl();
+        
+        // Redirect to intended page or home
+        window.location.href = redirectUrl;
+        
     } catch (error) {
-        showError(getErrorMessage(error.code));
+        hideLoading();
+        console.error('Error en registro:', error);
+        
+        let errorMessage = 'Error al crear cuenta';
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                errorMessage = 'Este email ya está registrado';
+                break;
+            case 'auth/invalid-email':
+                errorMessage = 'Email inválido';
+                break;
+            case 'auth/weak-password':
+                errorMessage = 'La contraseña debe tener al menos 6 caracteres';
+                break;
+        }
+        
+        showAlert(errorMessage, 'error');
     }
 }
 
-// Función para manejar el inicio de sesión con Google
-export async function handleGoogleLogin() {
-    try {
-        const result = await signInWithPopup(auth, googleProvider);
-        showSuccess('¡Inicio de sesión con Google exitoso!');
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1500);
-    } catch (error) {
-        showError(getErrorMessage(error.code));
-    }
+// Show/Hide Loading
+function showLoading() {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) overlay.classList.add('active');
 }
 
-// Función para mostrar mensajes de error
-function showError(message) {
-    const errorDiv = document.getElementById('errorMessage');
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
+function hideLoading() {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) overlay.classList.remove('active');
+}
+
+// Show Alert
+function showAlert(message, type) {
+    const alertBox = document.getElementById('alertBox');
+    if (!alertBox) return;
+    
+    alertBox.textContent = message;
+    alertBox.className = `alert ${type} active`;
+    
     setTimeout(() => {
-        errorDiv.style.display = 'none';
+        alertBox.classList.remove('active');
     }, 5000);
 }
 
-// Función para mostrar mensajes de éxito
-function showSuccess(message) {
-    const successDiv = document.getElementById('successMessage');
-    successDiv.textContent = message;
-    successDiv.style.display = 'block';
-    setTimeout(() => {
-        successDiv.style.display = 'none';
-    }, 5000);
-}
-
-// Función para traducir códigos de error de Firebase
-function getErrorMessage(code) {
-    const messages = {
-        'auth/email-already-in-use': 'Este email ya está registrado',
-        'auth/invalid-email': 'Email inválido',
-        'auth/operation-not-allowed': 'Operación no permitida',
-        'auth/weak-password': 'La contraseña debe tener al menos 6 caracteres',
-        'auth/user-disabled': 'Esta cuenta ha sido deshabilitada',
-        'auth/user-not-found': 'No existe una cuenta con este email',
-        'auth/wrong-password': 'Contraseña incorrecta',
-        'auth/invalid-credential': 'Credenciales inválidas',
-        'auth/popup-closed-by-user': 'Ventana de autenticación cerrada'
-    };
-    return messages[code] || 'Ha ocurrido un error. Intenta de nuevo.';
-}
-
-// Hacer las funciones disponibles globalmente
-window.handleLogin = handleLogin;
-window.handleRegister = handleRegister;
-window.handleGoogleLogin = handleGoogleLogin;
+// Form submission handlers
+document.addEventListener('DOMContentLoaded', function() {
+    // Login form
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            handleLogin(email, password);
+        });
+    }
+    
+    // Signup form
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            handleSignup(email, password, name);
+        });
+    }
+    
+    // Show redirect message if coming from another page
+    const redirectUrl = getRedirectUrl();
+    if (redirectUrl !== 'index.html') {
+        showAlert('Inicia sesión para continuar con tu pedido', 'info');
+    }
+});

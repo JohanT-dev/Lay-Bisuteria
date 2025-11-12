@@ -9,6 +9,7 @@ const firebaseConfig = {
     appId: "1:1088410162010:web:cb5545f742bcb501bc1963"
 };
 
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
@@ -60,14 +61,14 @@ function renderProducts() {
     const grid = document.getElementById('productsGrid');
     
     if (!grid) {
-        console.error('Products grid element not found');
+        console.error('Elemento de cuadrícula de productos no encontrado');
         return;
     }
     
     grid.innerHTML = '';
 
     if (filteredProducts.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">No products found</div>';
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">No se encontraron productos</div>';
         return;
     }
 
@@ -76,10 +77,10 @@ function renderProducts() {
         card.className = 'product-card';
 
         const priceHTML = product.oldPrice
-            ? `<span class="old-price">£${product.oldPrice.toFixed(2)}</span>
-               <span class="price">£${product.price.toFixed(2)}</span>
+            ? `<span class="old-price">${product.oldPrice.toFixed(2)}</span>
+               <span class="price">${product.price.toFixed(2)}</span>
                <span class="discount">${product.discount}</span>`
-            : `<span class="price">£${product.price.toFixed(2)}</span>`;
+            : `<span class="price">${product.price.toFixed(2)}</span>`;
 
         card.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="product-image">
@@ -91,10 +92,10 @@ function renderProducts() {
                 </div>
                 <div class="color-label">${product.color}</div>
                 <select class="size-select">
-                    <option>Please select size</option>
+                    <option>Por favor seleccione el tamaño</option>
                     ${product.sizes.map(size => `<option>${size}</option>`).join('')}
                 </select>
-                <button class="add-to-bag" onclick="addToBag('${product.id}')">Ordenar</button>
+                <button class="add-to-bag" onclick="addToBag('${product.id}')">Personalizar</button>
             </div>
         `;
 
@@ -102,14 +103,18 @@ function renderProducts() {
     });
 }
 
+// Toggle wishlist
+function toggleWishlist(productId) {
+    wishlist[productId] = !wishlist[productId];
+    // Save to localStorage
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    renderProducts();
+}
 
 // Add to bag
 function addToBag(productId) {
-    const product = products.find(p => p.id === productId);
-    if (product) {
-        alert(`Placed and order for ${product.name} in ${product.color}`);
-        // Here you can add logic to actually add to a shopping cart
-    }
+    // Redirect to customization page with product ID
+    window.location.href = `customize.html?id=${productId}`;
 }
 
 // Apply filters
@@ -175,4 +180,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Refresh products every 30 seconds to get new items
-setInterval(loadProductsFromFirebase, 30000);
+setInterval(loadProductsFromFirebase, 10000);
